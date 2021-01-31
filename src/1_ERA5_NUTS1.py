@@ -25,7 +25,11 @@ import matplotlib.pyplot as plt
 # Set the path for the data
 PATH_TO_PROJECT = '/home/stoop/Documents/Project/regionmaskmaker/'
 PATH_TO_NUTS0 = PATH_TO_PROJECT+'./data/raw/NUTS_RG_01M_2021_4326_LEVL_0.shp/NUTS_RG_01M_2021_4326_LEVL_0.shp'
-PATH_TO_NUTS1 = PATH_TO_PRO
+PATH_TO_NUTS1 = PATH_TO_PROJECT+'./data/raw/NUTS_RG_01M_2021_4326_LEVL_1.shp/NUTS_RG_01M_2021_4326_LEVL_1.shp'
+
+# Read NetCDF
+FOLDER_WITH_NETCDF = '/emhires-data/data-warehouse/gridded/ERA5/'
+
 
 print('NOTIFY: Initialization is complete, Skynet active')
 #%%
@@ -34,5 +38,10 @@ print('NOTIFY: Initialization is complete, Skynet active')
 # =============================================================================
 
 # Load the shapefile
-nuts = gpd.read_file(PATH_TO_SHAPEFILE)
-# nuts.head()
+nuts0 = gpd.read_file(PATH_TO_NUTS0)
+nuts1 = gpd.read_file(PATH_TO_NUTS1)
+# nuts.head() # to check the contents
+
+# Load in the NetCDF
+# d = xr.open_mfdataset(FOLDER_WITH_NETCDF+'era5-hourly-2m_temperature-2018-*.nc', chunks = {'time': 10})
+# d = d.assign_coords(longitude=(((d.longitude + 180) % 360) - 180)).sortby('longitude')
